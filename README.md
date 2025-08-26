@@ -118,9 +118,8 @@ Program.cs               # DI + static files + pipeline
 - draw.io (diagrams.net) for the embed editor.
 - Alpine.js for minimal reactive UI.
 - ASP.NET Core team for the framework.
-- [jbs.dev](https://jbs.dev) for the original proof-of-concept initiative and integration direction.
- - [jbs.dev](https://jbs.dev) for the original proof-of-concept initiative and integration direction.
- - Sample diagram inspirations from the open collection at [jgraph/drawio-diagrams](https://github.com/jgraph/drawio-diagrams).
+- [jbs.dev](https://jbs.dev) for the original proof-of-concept initiative and integration direction. 
+- Sample diagram inspirations from the open collection at [jgraph/drawio-diagrams](https://github.com/jgraph/drawio-diagrams).
 
 ## Author
 Created & maintained by [Ryan Mann](https://www.linkedin.com/in/ryan-mann-a372a336/) · [jbs.dev](https://jbs.dev)
