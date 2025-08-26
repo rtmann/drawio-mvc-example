@@ -1,0 +1,27 @@
+@*
+ Nested layout for DrawIo section with left side navigation and right content area.
+*@
+@{
+    Layout = "_Layout"; // Inherit global layout (navbar, etc.)
+    ViewData["FullWidth"] = true; // Request full-width from parent layout
+}
+
+<div class="w-100 m-0 p-0">
+    <div class="row g-0">
+        <aside class="col-12 col-sm-4 col-md-3 col-lg-2 border-end py-3 bg-light vh-100 overflow-auto">
+            <h5 class="px-3">Diagrams</h5>
+            <nav>
+                <ul class="nav flex-column" id="drawio-diagram-list">
+                    @RenderSection("DiagramNav", required: false)
+                </ul>
+            </nav>
+        </aside>
+        <main class="col px-0 py-3">
+            @RenderBody()
+        </main>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

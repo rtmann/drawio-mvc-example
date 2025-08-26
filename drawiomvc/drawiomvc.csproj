@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+    <ItemGroup>
+      <!-- Copy raw draw.io source diagrams to output (bin/...) for reference or tooling -->
+      <Content Include="..\testDiagrams\**\*.drawio">
+        <Link>testDiagrams\%(RecursiveDir)%(Filename)%(Extension)</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <!-- If you later add SVG exports under wwwroot/testDiagrams they are auto-included because wwwroot is static content. -->
+
+</Project>

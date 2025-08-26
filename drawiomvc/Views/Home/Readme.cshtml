@@ -1,0 +1,20 @@
+@{
+    ViewData["Title"] = "README";
+}
+<div class="container py-3" x-data="{ html:'Loading...' }" x-init="(async()=>{ try { let r = await fetch('/README.md',{cache:'no-cache'}); if(!r.ok) r = await fetch('/readme.md',{cache:'no-cache'}); if(!r.ok) throw 0; const t = await r.text(); let rendered = window.marked.parse(t); const div=document.createElement('div'); div.innerHTML=rendered; // fix relative image src
+ div.querySelectorAll('img').forEach(img=>{ const s=img.getAttribute('src'); if(s && !s.startsWith('http') && !s.startsWith('/')) { img.setAttribute('src','/'+s); } }); // fix relative anchor hrefs
+ div.querySelectorAll('a').forEach(a=>{ const h=a.getAttribute('href'); if(h && !h.startsWith('http') && !h.startsWith('#') && !h.startsWith('/')) { a.setAttribute('href','/'+h); } }); html = div.innerHTML; } catch { html='README not found.' } })()">
+    <h1 class="mb-4">Project README</h1>
+    <div id="readme-content" class="markdown-body" x-html="html"></div>
+</div>
+
+@section Scripts {
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- GitHub style (optional) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5.5.1/github-markdown-light.min.css" />
+    <style>
+        .markdown-body { max-width: 900px; }
+        pre { background:#f6f8fa; padding:.75rem; border-radius:4px; }
+    </style>
+}

@@ -1,0 +1,81 @@
+@model IEnumerable<drawiomvc.Models.DiagramInfo>
+@{
+    ViewData["Title"] = "Draw.io Embedded";
+    Layout = "~/Views/Shared/_Layout.DrawIo.cshtml";
+}
+
+@section DiagramNav {
+    <li class="nav-item px-3 mb-2">
+        <button class="btn btn-sm btn-primary w-100" x-data x-on:click="$dispatch('show-new-diagram')">+ New Diagram</button>
+    </li>
+    @foreach (var d in Model)
+    {
+    <li class="nav-item"><a class="nav-link" href="#" data-diagram-url="@d.Url" data-filename="@d.FileName">@d.Title</a></li>
+    }
+}
+
+<div class="d-none">@* Right pane intentionally blank; embed editor below *@</div>
+
+<div id="drawio-container" class="w-100 h-100 position-relative" style="min-height:80vh;" x-data="drawioComponent()" x-init="initialize()" x-on:show-new-diagram.window="openModal()">
+    <!-- Welcome panel shown until a diagram is opened or created (x-if destroys node so no layout conflict) -->
+    <template x-if="!hasDiagram">
+        <div x-cloak class="h-100 w-100 flex-column align-items-center justify-content-center text-center p-4 border rounded bg-light-subtle" style="display:flex;">
+            <h3 class="mb-3">Welcome to the Diagram Workspace</h3>
+            <p class="text-muted mb-4">
+                Use the list on the left to open an existing diagram, or click <strong>+ New Diagram</strong> to create one.<br/>
+                Your changes auto-save. Use the editor's <em>Save & Exit</em> (Exit) to return here.
+            </p>
+            <div>
+                <button class="btn btn-primary" x-on:click="$dispatch('show-new-diagram')">Create New Diagram</button>
+            </div>
+        </div>
+    </template>
+
+    <!-- Editor iframe (always in DOM so init event is captured; hidden until a diagram is active) -->
+    <div class="h-100 w-100" x-show="hasDiagram" x-cloak>
+    <div class="d-flex justify-content-end gap-2 mb-1" x-cloak>
+        <button class="btn btn-sm btn-outline-secondary" x-on:click="scheduleFit()" title="Center / Fit Diagram">Center</button>
+        <button class="btn btn-sm btn-outline-secondary" x-on:click="normalizePositions()" title="Shift diagram toward origin">Normalize</button>
+    </div>
+    <iframe id="drawio-frame" title="Draw.io Editor" style="width:100%;height:100%;border:0;" allowfullscreen
+        src="https://embed.diagrams.net/?proto=json&spin=1&embed=1&libraries=1&saveAndExit=1&lang=en&touch=0"></iframe>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" tabindex="-1" x-cloak style="background:rgba(0,0,0,.35);" x-ref="modal" x-show="showModal" x-transition.opacity :class="showModal ? 'show d-block' : ''"
+         x-on:keydown.escape="closeModal()">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">New Diagram</h5>
+                    <button type="button" class="btn-close" aria-label="Close" x-on:click="closeModal()"></button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label">Diagram Name</label>
+                    <input type="text" class="form-control" x-model="name" placeholder="e.g. order-flow" x-ref="nameInput" x-on:keydown.enter.prevent="create()" />
+                    <small class="text-muted">Allowed: letters, numbers, space, dash, underscore.</small>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" x-on:click="closeModal()">Cancel</button>
+                    <button class="btn btn-primary" :disabled="pending || !name.trim()" x-on:click="create()" x-text="pending ? 'Creating…' : 'Create'"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast container -->
+    <div class="position-absolute top-0 end-0 p-3" style="z-index:1080;">
+        <template x-for="t in toasts" :key="t.id">
+            <div class="toast align-items-center text-bg-" :class="t.type === 'error' ? 'danger' : 'success'" x-init="autoHide(t)" style="display:block; min-width:260px;">
+                <div class="d-flex">
+                    <div class="toast-body" x-text="t.message"></div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" x-on:click="removeToast(t.id)"></button>
+                </div>
+            </div>
+        </template>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/drawio-embed.js" asp-append-version="true"></script>
+}

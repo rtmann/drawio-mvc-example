@@ -1,0 +1,227 @@
+# Visual Studio / .NET / ASP.NET Core
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# VS user-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Visual Studio 2017/2019 cache/options directory
+.vs/
+
+# Generated build files
+Generated_Code*/
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+# NUNIT
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+# ATL Project build results
+[Dd]ebugPS/
+[Rr]eleasePS/
+dlldata.c
+
+# BenchmarkDotNet Artifacts
+BenchmarkDotNet.Artifacts/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# StyleCop
+StyleCopReport.xml
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.log
+*.vspscc
+*_i.asm
+*_p.asm
+
+# Others
+*.cache
+*.dll
+*.exe
+*.log
+*.vsmdi
+*.dbmdl
+*.bak
+*.backup
+*.BLOB
+*.core
+*.csproj.user
+
+# DotCover
+.idea/.idea.DotSettings
+
+# Rider
+.idea/
+*.sln.iml
+
+# User-specific files
+*.rsuser
+
+# JetBrains Rider / ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Azure Functions localsettings file
+local.settings.json
+
+# IIS Express
+.iisexpress/
+
+# Publish profiles
+[Pp]ublish[Pp]rofiles/
+
+# NuGet
+*.nupkg
+*.snupkg
+# The packages folder can be ignored because of Package Restore
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+!**/[Pp]ackages/repositories.config
+# NuGet v3's project.json files produces more ignorable files
+*.nuget.props
+*.nuget.targets
+
+# Node related (if using front-end tooling)
+node_modules/
+*.tsbuildinfo
+
+# Yarn / pnpm / npm logs
+.yarn-integrity
+pnpm-lock.yaml
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.*
+
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Mac files
+.DS_Store
+
+# Windows image file caches
+Thumbs.db
+Thumbs.db:encryptable
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Office temp files
+~$*
+
+# SQL Server files
+*.mdf
+*.ldf
+
+# T4 templates
+*.TextTemplatingLog
+
+# Coverage / analysis
+coverage*
+*.opencover.xml
+*.coverage
+*.coveragexml
+
+# Logs
+logs/
+*.tlog
+
+# Temporary ASP.NET Files
+Temporary ASP.NET Files/
+
+# VS profiler
+*.psess
+*.vsp
+*.vspx
+
+# Backup & report files from converting an old project file
+Backup*/
+UpgradeLog*.XML
+UpgradeLog*.htm
+
+# External tool caches
+.jetbrains/
+
+# Local history
+.localhistory/
+
+# WPF
+*.g.cs
+*.g.i.cs
+
+# Razor generated files
+*.cshtml.g.cs
+
+# EF Core Migrations Model Snapshot
+*Migrations/*ModelSnapshot.cs
+
+# Publish artifacts
+publish/
+
+# Docker (optional)
+*.dockerignore
+**/Dockerfile.*
+
+# Global tool manifests
+.dotnet-tools.json
+
+# Dist (front-end build)
+dist/
+build/
+
+# Images cache
+*.png.cache
+
+# Python (if scripts present)
+__pycache__/
+*.pyc
+
+# Ignore lock files optionally (uncomment if desired)
+# global.json
+
