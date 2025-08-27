@@ -2,6 +2,21 @@
 // Encapsulates draw.io embed + autosave + navigation logic using Alpine.js component factory.
 (function(){
     const DRAWIO_ORIGIN = 'https://embed.diagrams.net';
+    // Polyfill crypto.randomUUID if missing (older browsers / stripped environments)
+    (function(){
+        if (typeof window === 'undefined') return;
+        if (!window.crypto) window.crypto = {};
+        if (!window.crypto.randomUUID) {
+            window.crypto.randomUUID = function(){
+                // Prefer getRandomValues if available for better randomness
+                const g = (window.crypto.getRandomValues ? window.crypto.getRandomValues(new Uint8Array(16)) : Array.from({length:16}, () => Math.floor(Math.random()*256)));
+                g[6] = (g[6] & 0x0f) | 0x40; // version 4
+                g[8] = (g[8] & 0x3f) | 0x80; // variant
+                const h = Array.from(g, b => b.toString(16).padStart(2,'0'));
+                return `${h[0]}${h[1]}${h[2]}${h[3]}-${h[4]}${h[5]}-${h[6]}${h[7]}-${h[8]}${h[9]}-${h[10]}${h[11]}${h[12]}${h[13]}${h[14]}${h[15]}`;
+            };
+        }
+    })();
     const BLANK_XML = () => '<mxfile host="app.diagrams.net" modified="'+ new Date().toISOString() +'" agent="drawiomvc" version="24.7.0" type="device">'
         + '<diagram id="blank" name="Page-1"><mxGraphModel dx="1000" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0"/><mxCell id="1" parent="0"/></root></mxGraphModel></diagram></mxfile>';
 
@@ -156,7 +171,7 @@
             // Modal & toast UI
             openModal(){ this.name=''; this.showModal=true; document.body.classList.add('modal-open'); this.$nextTick(()=> this.$refs.nameInput?.focus()); },
             closeModal(){ this.showModal=false; document.body.classList.remove('modal-open'); },
-            toast(message,type='info'){ const id=crypto.randomUUID(); this.toasts.push({id,message,type}); },
+            toast(message,type='info'){ const id=(window.crypto && crypto.randomUUID ? crypto.randomUUID() : 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,10)); this.toasts.push({id,message,type}); },
             autoHide(t){ setTimeout(()=>this.removeToast(t.id), 3000); },
             removeToast(id){ this.toasts = this.toasts.filter(x=>x.id!==id); },
 

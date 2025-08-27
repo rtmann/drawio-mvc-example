@@ -25,7 +25,6 @@ RUN dotnet restore DrawIoExample.sln
 # Copy only required source (avoid sending docs, etc.)
 COPY drawiomvc/ drawiomvc/
 # Include test diagrams (remove if slimming)
-COPY testDiagrams/ testDiagrams/
 # Include repository-level docs & metadata needed by runtime (served via /docs and /README.md endpoint)
 COPY docs/ docs/
 COPY README.md LICENSE* ./
@@ -56,6 +55,12 @@ COPY --from=build /app/publish .
 COPY docs/ /docs/
 # Ensure README & LICENSE available at content root fallback
 COPY README.md LICENSE* ./
+
+# Ensure diagram storage directory is writable for non-root user
+USER root
+RUN mkdir -p /app/wwwroot/testDiagrams \
+    && chown -R app:app /app/wwwroot/testDiagrams
+USER app
 
 # Healthcheck (basic) - adjust path if you add a dedicated health endpoint
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 CMD wget -qO- http://127.0.0.1:8080/ || exit 1

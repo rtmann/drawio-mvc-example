@@ -37,10 +37,23 @@ public sealed class DiagramStorageService : IDiagramStorage
         var fileName = name + ".drawio";
         var path = Path.Combine(RootDir, fileName);
         if (File.Exists(path)) return (false, "Diagram already exists", null);
-        var blankXml = $"<mxfile host=\"app.diagrams.net\" modified=\"{DateTime.UtcNow:O}\" agent=\"drawiomvc\" version=\"24.7.0\" type=\"device\"><diagram id=\"{Guid.NewGuid():N}\" name=\"Page-1\"><mxGraphModel dx=\"1000\" dy=\"600\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"850\" pageHeight=\"1100\" math=\"0\" shadow=\"0\"><root><mxCell id=\"0\"/><mxCell id=\"1\" parent=\"0\"/></root></mxGraphModel></diagram></mxfile>";
-        await File.WriteAllTextAsync(path, blankXml, ct);
-        var info = new DiagramInfo(fileName, ToTitle(name), $"/{Folder}/{fileName}");
-        return (true, null, info);
+        try
+        {
+            var blankXml = $"<mxfile host=\"app.diagrams.net\" modified=\"{DateTime.UtcNow:O}\" agent=\"drawiomvc\" version=\"24.7.0\" type=\"device\"><diagram id=\"{Guid.NewGuid():N}\" name=\"Page-1\"><mxGraphModel dx=\"1000\" dy=\"600\" grid=\"1\" gridSize=\"10\" guides=\"1\" tooltips=\"1\" connect=\"1\" arrows=\"1\" fold=\"1\" page=\"1\" pageScale=\"1\" pageWidth=\"850\" pageHeight=\"1100\" math=\"0\" shadow=\"0\"><root><mxCell id=\"0\"/><mxCell id=\"1\" parent=\"0\"/></root></mxGraphModel></diagram></mxfile>";
+            await File.WriteAllTextAsync(path, blankXml, ct);
+            var info = new DiagramInfo(fileName, ToTitle(name), $"/{Folder}/{fileName}");
+            return (true, null, info);
+        }
+        catch (UnauthorizedAccessException ua)
+        {
+            _logger.LogError(ua, "Permission denied creating diagram {File}", fileName);
+            return (false, "Permission denied (container write issue)", null);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error creating diagram {File}", fileName);
+            return (false, "Create failed", null);
+        }
     }
 
     public async Task<(bool ok, string? message)> SaveAsync(string fileName, string xml, CancellationToken ct = default)
