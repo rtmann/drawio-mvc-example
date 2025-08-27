@@ -6,7 +6,7 @@
       "request": "launch",
       "name": ".NET Launch (HTTP)",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/drawiomvc/bin/Debug/net9.0/drawiomvc.dll",
+      "program": "${workspaceFolder}/drawiomvc/bin/Debug/net8.0/drawiomvc.dll",
       "cwd": "${workspaceFolder}/drawiomvc",
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development",
@@ -22,7 +22,7 @@
       "request": "launch",
       "name": ".NET Launch (HTTPS)",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/drawiomvc/bin/Debug/net9.0/drawiomvc.dll",
+      "program": "${workspaceFolder}/drawiomvc/bin/Debug/net8.0/drawiomvc.dll",
       "cwd": "${workspaceFolder}/drawiomvc",
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development",
