@@ -2,8 +2,8 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "process",
       "label": "build",
+      "type": "process",
       "command": "dotnet",
       "args": [
         "build",
@@ -11,8 +11,23 @@
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
-      "problemMatcher": "$msCompile",
-      "group": "build"
+      "group": "build",
+      "problemMatcher": ["$msCompile"]
+    },
+    {
+      "label": "docker: build drawiomvc",
+      "type": "shell",
+      "command": "docker",
+      "args": [
+        "build",
+        "-t",
+        "drawiomvc",
+        "."
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
     }
   ]
 }
